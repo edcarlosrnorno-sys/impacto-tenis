@@ -1,0 +1,69 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Admin - Impacto Tênis</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{font-family:Arial;background:#0b0b0b;color:white;padding:20px}
+input{padding:10px;margin:5px;width:250px}
+button{padding:10px 15px;background:#00ff66;border:none;font-weight:bold}
+.card{margin-top:10px}
+</style>
+</head>
+<body>
+
+<h2>Painel Admin - Impacto Tênis</h2>
+
+<div>
+<input id="nome" placeholder="Nome do tênis"><br>
+<input id="preco" placeholder="Preço"><br>
+<input id="img" placeholder="Link da imagem"><br>
+<button onclick="add()">Adicionar Produto</button>
+</div>
+
+<h3>Produtos cadastrados</h3>
+<div id="lista"></div>
+
+<script>
+let produtos = JSON.parse(localStorage.getItem("impacto_produtos") || "[]");
+
+function salvar(){
+localStorage.setItem("impacto_produtos", JSON.stringify(produtos));
+}
+
+function add(){
+let nome = document.getElementById("nome").value;
+let preco = document.getElementById("preco").value;
+let img = document.getElementById("img").value;
+
+produtos.push({nome,preco,img});
+salvar();
+mostrar();
+}
+
+function remover(i){
+produtos.splice(i,1);
+salvar();
+mostrar();
+}
+
+function mostrar(){
+let lista = document.getElementById("lista");
+lista.innerHTML="";
+
+produtos.forEach((p,i)=>{
+lista.innerHTML+=`
+<div class="card">
+${p.nome} - R$ ${p.preco}
+<button onclick="remover(${i})">Excluir</button>
+</div>`;
+});
+}
+
+mostrar();
+</script>
+
+</body>
+</html>

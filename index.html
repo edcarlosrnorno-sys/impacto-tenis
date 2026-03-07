@@ -1,0 +1,64 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Impacto Tênis</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{font-family:Arial;background:#0b0b0b;color:white;margin:0}
+header{background:#0f0f0f;padding:20px;text-align:center;border-bottom:3px solid #00ff66}
+h1{color:#00ff66;margin:0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:20px;padding:20px}
+.card{background:#151515;padding:15px;border-radius:10px;text-align:center}
+.card img{width:100%;border-radius:8px}
+.btn{display:inline-block;margin-top:10px;padding:10px 15px;background:#00ff66;color:black;text-decoration:none;border-radius:6px;font-weight:bold}
+.admin{position:fixed;bottom:10px;right:10px;background:#00ff66;color:black;padding:10px;border-radius:6px;text-decoration:none}
+</style>
+</head>
+<body>
+<div style="margin-top:40px;">
+    <p>Siga nosso Instagram</p>
+    <a href="https://instagram.com/edcasaoficial" target="_blank">
+        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="40">
+    </a>
+</div>
+<div style="text-align:center; margin-top:20px;">
+<img src="logo.png" style="width:180px;">
+<h1></h1>
+</div>
+<header>
+<h1>Impacto Tênis</h1>
+<p>Catálogo de Calçados</p>
+</header>
+
+<div class="grid" id="produtos"></div>
+
+<a class="admin" href="admin.html">ADMIN</a>
+
+<script>
+let produtos = JSON.parse(localStorage.getItem("impacto_produtos") || "[]");
+
+let container = document.getElementById("produtos");
+
+function carregar(){
+container.innerHTML = "";
+
+produtos.forEach(p=>{
+container.innerHTML += `
+<div class="card">
+<img src="${p.img}" alt="tenis">
+<h3>${p.nome}</h3>
+<p>R$ ${p.preco}</p>
+<a class="btn" target="_blank"
+href="https://wa.me/5511979904099?text=Olá%20quero%20esse%20tenis:%20${p.nome}">
+Comprar</a>
+</div>`;
+});
+}
+
+carregar();
+</script>
+
+</body>
+</html>
