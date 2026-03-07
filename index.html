@@ -17,6 +17,12 @@ h1{color:#00ff66;margin:0}
 </style>
 </head>
 <body>
+.logo {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 180px;
 <div style="margin-top:40px;">
     <p>Siga nosso Instagram</p>
     <a href="https://instagram.com/edcasaoficial" target="_blank">
@@ -34,7 +40,7 @@ h1{color:#00ff66;margin:0}
 
 <div class="grid" id="produtos"></div>
 
-<a class="admin" href="admin.html">ADMIN</a>
+
 
 <script>
 let produtos = JSON.parse(localStorage.getItem("impacto_produtos") || "[]");
