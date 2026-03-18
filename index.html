@@ -3,67 +3,175 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>Impacto Tênis</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Impacto Tênis</title>
+
 <style>
-body{font-family:Arial;background:#0b0b0b;color:white;margin:0}
-header{background:#0f0f0f;padding:20px;text-align:center;border-bottom:3px solid #00ff66}
-h1{color:#00ff66;margin:0}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:20px;padding:20px}
-.card{background:#151515;padding:15px;border-radius:10px;text-align:center}
-.card img{width:100%;border-radius:8px}
-.btn{display:inline-block;margin-top:10px;padding:10px 15px;background:#00ff66;color:black;text-decoration:none;border-radius:6px;font-weight:bold}
-.admin{position:fixed;bottom:10px;right:10px;background:#00ff66;color:black;padding:10px;border-radius:6px;text-decoration:none}
+body{
+margin:0;
+font-family:Arial;
+background:#0a0a0a;
+color:white;
+}
+
+/* FUNDO */
+body::before{
+content:"";
+position:fixed;
+width:100%;
+height:100%;
+background:url("https://images.unsplash.com/photo-1542291026-7eec264c27ff") center/cover;
+opacity:0.05;
+z-index:-1;
+}
+
+/* TOPO */
+.topo{
+text-align:center;
+padding:15px;
+}
+
+.logo{
+width:120px;
+}
+
+/* BUSCA */
+.busca{
+margin:10px;
+text-align:center;
+}
+
+.busca input{
+width:90%;
+padding:10px;
+border-radius:8px;
+border:none;
+}
+
+/* FILTRO */
+.filtros{
+text-align:center;
+margin:10px;
+}
+
+.filtros button{
+margin:5px;
+padding:8px 12px;
+border:none;
+border-radius:6px;
+background:#00ff66;
+font-weight:bold;
+}
+
+/* GRID */
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+gap:15px;
+padding:10px;
+}
+
+/* CARD */
+.card{
+background:#111;
+padding:10px;
+border-radius:12px;
+text-align:center;
+position:relative;
+}
+
+/* PROMO */
+.promo{
+position:absolute;
+top:5px;
+left:5px;
+background:red;
+padding:3px 6px;
+font-size:12px;
+border-radius:4px;
+}
+
+.card img{
+width:100%;
+border-radius:10px;
+}
+
+.btn{
+display:block;
+margin-top:8px;
+padding:10px;
+background:#00ff66;
+color:black;
+text-decoration:none;
+border-radius:8px;
+font-weight:bold;
+}
 </style>
 </head>
+
 <body>
-.logo {
-    position: absolute;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 180px;
-<div style="margin-top:40px;">
-    <p>Siga nosso Instagram</p>
-    <a href="https://instagram.com/edcasaoficial" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="40">
-    </a>
+
+<div class="topo">
+<img src="logo.png" class="logo">
+<h2>Impacto Tênis</h2>
 </div>
-<div style="text-align:center; margin-top:20px;">
-<img src="logo.png" style="width:180px;">
-<h1></h1>
+
+<div class="busca">
+<input type="text" id="search" placeholder="Buscar tênis...">
 </div>
-<header>
-<h1>Impacto Tênis</h1>
-<p>Catálogo de Calçados</p>
-</header>
+
+<div class="filtros">
+<button onclick="filtrar('todos')">Todos</button>
+<button onclick="filtrar('nike')">Nike</button>
+<button onclick="filtrar('adidas')">Adidas</button>
+</div>
 
 <div class="grid" id="produtos"></div>
 
-
-
 <script>
-let produtos = JSON.parse(localStorage.getItem("impacto_produtos") || "[]");
+
+let lista = [
+{nome:"Nike Air", preco:199, marca:"nike", img:"tenis1.jpg", promo:true},
+{nome:"Adidas Run", preco:179, marca:"adidas", img:"tenis2.jpg", promo:false}
+];
 
 let container = document.getElementById("produtos");
 
-function carregar(){
-container.innerHTML = "";
+function mostrar(produtos){
+container.innerHTML="";
 
 produtos.forEach(p=>{
-container.innerHTML += `
+container.innerHTML+=`
 <div class="card">
-<img src="${p.img}" alt="tenis">
+${p.promo ? '<div class="promo">PROMO</div>' : ''}
+<img src="${p.img}">
 <h3>${p.nome}</h3>
 <p>R$ ${p.preco}</p>
 <a class="btn" target="_blank"
-href="https://wa.me/5511979904099?text=Olá%20quero%20esse%20tenis:%20${p.nome}">
+href="https://wa.me/5511979904099?text=Quero%20esse%20${p.nome}">
 Comprar</a>
 </div>`;
 });
 }
 
-carregar();
+mostrar(lista);
+
+/* BUSCA */
+document.getElementById("search").addEventListener("keyup", e=>{
+let valor = e.target.value.toLowerCase();
+let filtrado = lista.filter(p=>p.nome.toLowerCase().includes(valor));
+mostrar(filtrado);
+});
+
+/* FILTRO */
+function filtrar(marca){
+if(marca=="todos"){
+mostrar(lista);
+}else{
+mostrar(lista.filter(p=>p.marca==marca));
+}
+}
+
 </script>
 
 </body>
