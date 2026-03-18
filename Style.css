@@ -1,0 +1,104 @@
+/* TOPO CARD */
+.topo-card{
+display:flex;
+justify-content:space-between;
+font-size:12px;
+margin-bottom:5px;
+}
+
+.promo{
+background:red;
+padding:3px 6px;
+border-radius:4px;
+}
+
+.top{
+background:#00ff66;
+color:black;
+padding:3px 6px;
+border-radius:4px;
+}
+
+/* DESCRIÇÃO */
+.desc{
+font-size:13px;
+color:#ccc;
+}
+
+/* ESTRELAS */
+.estrelas{
+color:gold;
+margin:5px 0;
+}
+
+/* PREÇO */
+.preco{
+font-size:18px;
+color:#00ff66;
+font-weight:bold;
+}
+body{
+margin:0;
+font-family:Arial;
+background:#eef1f6;
+display:flex;
+height:100vh;
+}
+
+.sidebar{
+width:240px;
+background:white;
+padding:20px;
+box-shadow:2px 0 10px rgba(0,0,0,0.1);
+}
+
+.logoBox{
+display:flex;
+align-items:center;
+gap:10px;
+margin-bottom:30px;
+}
+
+.menu button{
+width:100%;
+padding:12px;
+margin-bottom:10px;
+border:none;
+border-radius:8px;
+background:#f4f4f4;
+cursor:pointer;
+font-weight:bold;
+}
+
+.menu button:hover{
+background:#e9e9ff;
+}
+
+.main{
+flex:1;
+display:flex;
+flex-direction:column;
+}
+
+.topbar{
+height:65px;
+background:white;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 20px;
+box-shadow:0 2px 6px rgba(0,0,0,0.1);
+}
+
+.editor{
+flex:1;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+canvas{
+background:white;
+border-radius:10px;
+box-shadow:0 10px 30px rgba(0,0,0,0.15);
+}
