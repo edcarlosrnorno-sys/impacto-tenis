@@ -1,30 +1,4 @@
 
-<!-- ADICIONE ISSO DENTRO DO CARD -->
-
-<div class="card">
-
-<div class="topo-card">
-<span class="promo">🔥 PROMO</span>
-<span class="top">MAIS VENDIDO</span>
-</div>
-
-
-<img src="tenis1.jpg">
-
-<h3>Nike Air Max</h3>
-
-<p class="desc">Conforto extremo e estilo moderno</p>
-
-<div class="estrelas">⭐⭐⭐⭐⭐</div>
-
-<p class="preco">R$ 95</p>
-
-<a class="btn" target="_blank"
-href="https://wa.me/5511979904099?text=Quero%20esse%20Nike%20Air%20Max">
-Comprar no WhatsApp
-</a>
-
-</div>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -40,56 +14,6 @@ background:#0a0a0a;
 color:white;
 }
 
-/* FUNDO */
-body::before{
-content:"";
-position:fixed;
-width:100%;
-height:100%;
-background:url("https://images.unsplash.com/photo-1542291026-7eec264c27ff") center/cover;
-opacity:0.05;
-z-index:-1;
-}
-
-/* TOPO */
-.topo{
-text-align:center;
-padding:15px;
-}
-
-.logo{
-width:120px;
-}
-
-/* BUSCA */
-.busca{
-margin:10px;
-text-align:center;
-}
-
-.busca input{
-width:90%;
-padding:10px;
-border-radius:8px;
-border:none;
-}
-
-/* FILTRO */
-.filtros{
-text-align:center;
-margin:10px;
-}
-
-.filtros button{
-margin:5px;
-padding:8px 12px;
-border:none;
-border-radius:6px;
-background:#00ff66;
-font-weight:bold;
-}
-
-/* GRID */
 .grid{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
@@ -97,24 +21,11 @@ gap:15px;
 padding:10px;
 }
 
-/* CARD */
 .card{
 background:#111;
 padding:10px;
 border-radius:12px;
 text-align:center;
-position:relative;
-}
-
-/* PROMO */
-.promo{
-position:absolute;
-top:5px;
-left:5px;
-background:red;
-padding:3px 6px;
-font-size:12px;
-border-radius:4px;
 }
 
 .card img{
@@ -137,20 +48,7 @@ font-weight:bold;
 
 <body>
 
-<div class="topo">
-<img src="logo.png" class="logo">
-<h2>Impacto Tênis</h2>
-</div>
-
-<div class="busca">
-<input type="text" id="search" placeholder="Buscar tênis...">
-</div>
-
-<div class="filtros">
-<button onclick="filtrar('todos')">Todos</button>
-<button onclick="filtrar('nike')">Nike</button>
-<button onclick="filtrar('adidas')">Adidas</button>
-</div>
+<h2 style="text-align:center;">Impacto Tênis</h2>
 
 <div class="grid" id="produtos"></div>
 
@@ -181,55 +79,8 @@ marca:"puma",
 img:"https://images.unsplash.com/photo-1593032465171-8c3b5b2c1d65?auto=format&fit=crop&w=500&q=60",
 promo:true
 }
-{
-nome:"Vans Knu Skool",
-preco:135,
-marca:"nike",
-img:"https://http2.mlstatic.com/D_NQ_NP_2X_929793-MLB99173272284_112025-F-tnis-vans-knu-skool-navy-true-white.webp,
-promo:true
-},
-
-{
-nome:"Adidas Run Falcon",
-preco:179,
-marca:"adidas",
-img:"https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?auto=format&fit=crop&w=500&q=60",
-promo:false
-},
-
-{
-nome:"Puma RS-X",
-preco:189,
-marca:"puma",
-img:https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcQVKCQZAr-dhU8XkRgN9Tl6iNYhKezZnPjPv3-HWYBsSZXRSoGW6F227TGm1vpeGLmf5BtYj2viiYtYDq_VCxzWJ2M6hjnY,
-promo:true
-}
-{
-nome:"Nike Air Max",
-preco:199,
-marca:"nike",
-img:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=500&q=60",
-promo:true
-},
-
-{
-nome:"Adidas Run Falcon",
-preco:179,
-marca:"adidas",
-img:"https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?auto=format&fit=crop&w=500&q=60",
-promo:false
-},
-
-{
-nome:"Puma RS-X",
-preco:189,
-marca:"puma",
-img:"https://images.unsplash.com/photo-1593032465171-8c3b5b2c1d65?auto=format&fit=crop&w=500&q=60",
-promo:true
-}
 
 ];
-?auto=format&fit=crop&w=500&q=60
 
 let container = document.getElementById("produtos");
 
@@ -239,34 +90,18 @@ container.innerHTML="";
 produtos.forEach(p=>{
 container.innerHTML+=`
 <div class="card">
-${p.promo ? '<div class="promo">PROMO</div>' : ''}
 <img src="${p.img}">
 <h3>${p.nome}</h3>
 <p>R$ ${p.preco}</p>
 <a class="btn" target="_blank"
 href="https://wa.me/5511979904099?text=Quero%20esse%20${p.nome}">
-Comprar</a>
+Comprar
+</a>
 </div>`;
 });
 }
 
 mostrar(lista);
-
-/* BUSCA */
-document.getElementById("search").addEventListener("keyup", e=>{
-let valor = e.target.value.toLowerCase();
-let filtrado = lista.filter(p=>p.nome.toLowerCase().includes(valor));
-mostrar(filtrado);
-});
-
-/* FILTRO */
-function filtrar(marca){
-if(marca=="todos"){
-mostrar(lista);
-}else{
-mostrar(lista.filter(p=>p.marca==marca));
-}
-}
 
 </script>
 
