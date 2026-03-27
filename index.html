@@ -6,7 +6,81 @@
 <title>Impacto Tênis</title>
 
 <style>
+.carrinho{
+position:fixed;
+top:50%;
+right:0;
+transform:translateY(-50%);
+background:#111;
+padding:15px;
+width:220px;
+border-left:3px solid #00ff66;
+}
 
+.carrinho h3{
+margin-top:0;
+}
+
+.item{
+display:flex;
+justify-content:space-between;
+font-size:14px;
+margin:5px 0;
+}
+
+.item button{
+background:red;
+border:none;
+color:white;
+cursor:pointer;
+}
+
+#finalizar{
+display:block;
+margin-top:10px;
+background:#00ff66;
+color:black;
+padding:10px;
+text-align:center;
+text-decoration:none;
+border-radius:6px;
+}
+⚙️ JAVASCRIPT (cola no final do <script>)
+let carrinho = [];
+
+function adicionar(nome, preco){
+carrinho.push({nome, preco});
+atualizarCarrinho();
+}
+
+function remover(index){
+carrinho.splice(index,1);
+atualizarCarrinho();
+}
+
+function atualizarCarrinho(){
+let itens = document.getElementById("itens");
+let total = 0;
+
+itens.innerHTML = "";
+
+carrinho.forEach((p,i)=>{
+total += p.preco;
+
+itens.innerHTML += `
+<div class="item">
+${p.nome} - R$ ${p.preco}
+<button onclick="remover(${i})">X</button>
+</div>
+`;
+});
+
+document.getElementById("total").innerText = total;
+
+let texto = carrinho.map(p=>p.nome).join(", ");
+document.getElementById("finalizar").href =
+`https://wa.me/5511979904099?text=Quero comprar: ${texto} - Total R$ ${total}`;
+}
 body{
 margin:0;
 font-family:Arial;
@@ -133,16 +207,20 @@ text-decoration:none;
 
 </style>
 </head>
-
-<body>
+{
 
 <header>
+
+<body>
+  <div class="bolinhas" id="bolinhas"></div>
+
+</div>
 <div class="mini-banner">
   <div class="mini-slides">
     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRzHFA0eIzZxKmhaFZwF5v8zHjQCPtJL89_1g&s">
-   
   </div>
 </div>
+
 <img src="logo.png" class="logo">
 
 <h1>Impacto Tênis</h1>
@@ -155,39 +233,82 @@ text-decoration:none;
 
 </header>
 
+<div class="filtros">
+
+<input type="text" id="busca" placeholder="Buscar tênis...">
+
+<div class="botoes">
+<button onclick="setMarca('todos')" id="btn-todos">Todos</button>
+<button onclick="setMarca('nike')" id="btn-nike">Nike</button>
+<button onclick="setMarca('adidas')" id="btn-adidas">Adidas</button>
+<button onclick="setMarca('puma')" id="btn-puma">Puma</button>
+</div>
+
+<div class="botoes">
+<button onclick="setPreco('todos')">Todos</button>
+<button onclick="setPreco('barato')">Até R$180</button>
+<button onclick="setPreco('caro')">Acima de R$180</button>
+</div>
+
+</div>
+
 <div class="grid" id="produtos"></div>
 
 <a class="whats" href="https://wa.me/5511979904099" target="_blank">💬</a>
 
 <script>
+let marcaSelecionada = "todos";
+let precoSelecionado = "todos";
+
+/* BUSCA */
+document.getElementById("busca").addEventListener("keyup", aplicarFiltros);
+
+function setMarca(m){
+marcaSelecionada = m;
+destacarBotao(m);
+aplicarFiltros();
+}
+
+function setPreco(p){
+precoSelecionado = p;
+aplicarFiltros();
+}
+
+function destacarBotao(marca){
+document.querySelectorAll(".botoes button").forEach(btn=>{
+btn.classList.remove("ativo");
+});
+
+let btn = document.getElementById("btn-" + marca);
+if(btn) btn.classList.add("ativo");
+}
+
+function aplicarFiltros(){
+
+let valor = document.getElementById("busca").value.toLowerCase();
+
+let filtrado = lista.filter(p=>{
+
+let okNome = p.nome.toLowerCase().includes(valor);
+
+let okMarca = marcaSelecionada === "todos" || p.marca === marcaSelecionada;
+
+let okPreco =
+precoSelecionado === "todos" ||
+(precoSelecionado === "barato" && p.preco <= 180) ||
+(precoSelecionado === "caro" && p.preco > 180);
+
+return okNome && okMarca && okPreco;
+
+});
+
+mostrar(filtrado);
+}
 
 let lista = [
 
-{
-nome:"Nike Air Max",
-preco:199,
-desc:"Conforto extremo e estilo moderno",
-img:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=500&q=60",
-promo:true
-},
 
 {
-nome:"Adidas Run Falcon",
-preco:179,
-desc:"Leve e perfeito para o dia a dia",
-img:"https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?auto=format&fit=crop&w=500&q=60",
-promo:false
-},
-
-{
-nome:"Puma RS-X",
-preco:189,
-desc:"Design moderno e confortável",
-img:"https://images.unsplash.com/photo-1593032465171-8c3b5b2c1d65?auto=format&fit=crop&w=500&q=60",
-promo:true
-},
-
-  {
 nome:"Nike Air Max",
 preco:199,
 desc:"Conforto extremo e estilo moderno",
@@ -509,6 +630,7 @@ promo:false
 
 ];
 
+
 let container = document.getElementById("produtos");
 
 function mostrar(){
@@ -530,9 +652,10 @@ ${p.promo ? '<div class="promo">PROMO</div>' : ''}
 
 <p class="preco">R$ ${p.preco}</p>
 
-<a class="btn" target="_blank"
-href="https://wa.me/5511979904099?text=Quero%20esse%20${p.nome}">
-Comprar no WhatsApp
+<button class="btn" onclick="adicionar('${p.nome}', ${p.preco})">
+Adicionar ao carrinho
+</button>
+
 </a>
 
 </div>`;
@@ -541,7 +664,16 @@ Comprar no WhatsApp
 
 mostrar();
 
+
 </script>
 
+<div class="carrinho" id="carrinho">
+<h3>🛒 Carrinho</h3>
+<div id="itens"></div>
+<p>Total: R$ <span id="total">0</span></p>
+<a id="finalizar" target="_blank">Finalizar no WhatsApp</a>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
